@@ -1,0 +1,63 @@
+SQL> update product
+  2  set disc=40;
+
+4 rows updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update orders
+  2  set delivery_date='1-apr-2020';
+
+3 rows updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into product values(1238,'bluetooth headphones',4000,80);
+
+1 row created.
+
+SQL> insert into product values(1239,'Shoes',5000,10);
+
+1 row created.
+
+SQL> savepoint sp1;
+
+Savepoint created.
+
+SQL> insert into product values(1240,'jewellery',50000,20);
+
+1 row created.
+
+SQL> insert into product values(1241,'iphone',90000,10);
+
+1 row created.
+
+SQL> savepoint sp2;
+
+Savepoint created.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from product;
+
+       PID PNAME                     PRICE       DISC                           
+---------- -------------------- ---------- ----------                           
+      1234 biscuits                   2000         40                           
+      1235 tv                        40000         40                           
+      1236 Mobile                    18000         40                           
+      1237 camera                    10000         40                           
+
+SQL> rollback to sp1;
+rollback to sp1
+*
+ERROR at line 1:
+ORA-01086: savepoint 'SP1' never established 
+
+
+SQL> spool off

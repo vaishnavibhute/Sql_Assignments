@@ -1,0 +1,238 @@
+SQL> desc product
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PR_ID                                     NOT NULL NUMBER(4)
+ PNAME                                     NOT NULL VARCHAR2(20)
+ PRICE                                     NOT NULL NUMBER(10)
+ DISC                                      NOT NULL NUMBER(2)
+
+SQL> alter table product
+  2  rename column pr_id to pid;
+
+Table altered.
+
+SQL> alter table customer
+  2  add pr_id number(4)
+  3  add constraint p_id_fk foreign key(pr_id) references product(pid);
+
+Table altered.
+
+SQL> alter table customer
+  2  add o_id number(4)
+  3  add constraint o_id_fk foreign key(o_id) references orders(oid);
+
+Table altered.
+
+SQL> desc customer
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CID                                       NOT NULL NUMBER(4)
+ CNAME                                     NOT NULL VARCHAR2(20)
+ LOC                                       NOT NULL VARCHAR2(40)
+ CNO                                       NOT NULL NUMBER(10)
+ PR_ID                                              NUMBER(4)
+ O_ID                                               NUMBER(4)
+
+SQL> insert into customer values(1234,"aakash","pune",101);
+insert into customer values(1234,"aakash","pune",101)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into product values(1234,"biscuits",2000,10)
+SQL> /
+insert into product values(1234,"biscuits",2000,10)
+                                *
+ERROR at line 1:
+ORA-00984: column not allowed here 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into product values(1234,'biscuits',2000,10)
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into product values(1235,'tv',40000,25)
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into product values(1236,'Mobile',18000,20)
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into product values(1237,'camera',10000,13)
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into orders values(101,'Electronic product','27-aug-2021','1-aug-2021')
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into orders values(102,'grocerry','15-jun-2022','12-jun-2022')
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into orders values(103,'Electronic product','10-may-2022','1-may-2022')
+SQL> /
+
+1 row created.
+SQL> commit;
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into customer values(001,'Aakash','pune')
+SQL> /
+insert into customer values(001,'Aakash','pune')
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> select * from product;
+
+       PID PNAME                     PRICE       DISC                           
+---------- -------------------- ---------- ----------                           
+      1234 biscuits                   2000         10                           
+      1235 tv                        40000         25                           
+      1236 Mobile                    18000         20                           
+      1237 camera                    10000         13                           
+
+SQL> select * from orders;
+
+       OID ONAME                DELIVERY_ DATE_OF_O                             
+---------- -------------------- --------- ---------                             
+       101 Electronic product   27-AUG-21 01-AUG-21                             
+       102 grocerry             15-JUN-22 12-JUN-22                             
+       103 Electronic product   10-MAY-22 01-MAY-22                             
+
+SQL> insert into customer values(001,'Aakash','pune',1236,101);
+insert into customer values(001,'Aakash','pune',1236,101)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> desc customer
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CID                                       NOT NULL NUMBER(4)
+ CNAME                                     NOT NULL VARCHAR2(20)
+ LOC                                       NOT NULL VARCHAR2(40)
+ CNO                                       NOT NULL NUMBER(10)
+ PR_ID                                              NUMBER(4)
+ O_ID                                               NUMBER(4)
+
+SQL> insert into customer values(001,'Aakash','pune',9028668100,1236,101);
+
+1 row created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into customer values(002,'vikas','kolhapur',9271668100,1235,101)
+SQL> /
+
+1 row created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into customer values(003,'sonal','mumbai',1547896325,1234,102)
+SQL> /
+
+1 row created.
+SQL> commit;
+SQL> select * from customer;
+
+       CID CNAME                LOC                                             
+---------- -------------------- ----------------------------------------        
+       CNO      PR_ID       O_ID                                                
+---------- ---------- ----------                                                
+         1 Aakash               pune                                            
+9028668100       1236        101                                                
+                                                                                
+         2 vikas                kolhapur                                        
+9271668100       1235        101                                                
+                                                                                
+         3 sonal                mumbai                                          
+1547896325       1234        102                                                
+                                                                                
+
+SQL> select * from product;
+
+       PID PNAME                     PRICE       DISC                           
+---------- -------------------- ---------- ----------                           
+      1234 biscuits                   2000         10                           
+      1235 tv                        40000         25                           
+      1236 Mobile                    18000         20                           
+      1237 camera                    10000         13                           
+
+SQL> select * from orders;
+
+       OID ONAME                DELIVERY_ DATE_OF_O                             
+---------- -------------------- --------- ---------                             
+       101 Electronic product   27-AUG-21 01-AUG-21                             
+       102 grocerry             15-JUN-22 12-JUN-22                             
+       103 Electronic product   10-MAY-22 01-MAY-22                             
+
+SQL> update product
+  2  set disc=40;
+
+4 rows updated.
+
+SQL> update orders
+  2  set delivery_date='1-apr-2020';
+
+3 rows updated.
+
+SQL> delete from product
+  2  where price>15000;
+delete from product
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.P_ID_FK) violated - child record found 
+
+
+SQL> delete from orders
+  2  where delivery_date>'1-apr-2020';
+
+0 rows deleted.
+
+SQL> spool off

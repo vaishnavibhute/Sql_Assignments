@@ -1,0 +1,92 @@
+SQL> CREATE TABLE CUSTOMER_DETAILS
+  2  (
+  3  CID VARCHAR(4) NOT NULL,
+  4  CNAME VARCHAR(20) NOT NULL,
+  5  LOC VARCHAR(25) NOT NULL,
+  6  CONSTRAINT PK1 PRIMARY KEY(CID)
+  7  );
+CONSTRAINT PK1 PRIMARY KEY(CID)
+           *
+ERROR at line 6:
+ORA-02264: name already used by an existing constraint 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE CUSTOMER_DETAILS
+  2  (
+  3  CID VARCHAR(4) NOT NULL,
+  4  CNAME VARCHAR(20) NOT NULL,
+  5  LOC VARCHAR(25) NOT NULL,
+  6  CONSTRAINT PK5 PRIMARY KEY(CID)
+  7* )
+SQL> /
+
+Table created.
+
+SQL> CREATE TABLE PRODUCT_DETAILS
+  2  (
+  3  PID VARCHAR(4) NOT NULL,
+  4  PNAME VARCHAR(20) NOT NULL,
+  5  PRICE NUMBER(10) NOT NULL,
+  6  DISC NUMBER(3) NOT NULL,
+  7  CONSTRAINT PK6 PRIMARY KEY(PID)
+  8  );
+
+Table created.
+
+SQL> CREATE TABLE ORDERS
+  2  (
+  3  OID VARCHAR(4) NOT NULL,
+  4  ONAME VARCHAR(20) NOT NULL,
+  5  DELIVERY_DATE DATE NOT NULL,
+  6  CONSTRAINT PK7 PRIMARY KEY(OID)
+  7  );
+
+Table created.
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+DEPT                           TABLE                                            
+EMP                            TABLE                                            
+BONUS                          TABLE                                            
+SALGRADE                       TABLE                                            
+EMPLOYEE                       TABLE                                            
+STUDENT                        TABLE                                            
+LIBRARY                        TABLE                                            
+CUSTOMER_DETAILS               TABLE                                            
+PRODUCT_DETAILS                TABLE                                            
+ORDERS                         TABLE                                            
+
+10 rows selected.
+
+SQL> ALTER TABLE CUSTOMER_DETAILS RENAME TO CUSTOMER;
+
+Table altered.
+
+SQL> ALTER TABLE PRODUCT_DETAILS RENAME TO PRODUCT;
+
+Table altered.
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+DEPT                           TABLE                                            
+EMP                            TABLE                                            
+BONUS                          TABLE                                            
+SALGRADE                       TABLE                                            
+EMPLOYEE                       TABLE                                            
+STUDENT                        TABLE                                            
+LIBRARY                        TABLE                                            
+PRODUCT                        TABLE                                            
+ORDERS                         TABLE                                            
+CUSTOMER                       TABLE                                            
+
+10 rows selected.
+
+SQL>SPOOL OFF
+
